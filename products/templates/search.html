@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Green Shopping Assistant</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'products/style.css' %}">
+</head>
+<body>
+    <h1>Search for a Product</h1>
+    
+    <form method="GET">
+        <input type="text" name="q" placeholder="Enter barcode or product name" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if product %}
+        <h2>Product: {{ product.name }}</h2>
+        
+        {% if product.is_eco_friendly %}
+            <p class="green">✅ This product is eco-friendly!</p>
+        {% else %}
+            <p class="red">❌ Not eco-friendly</p>
+            {% if product.alternative %}
+                <p>Try this sustainable alternative: <strong>{{ product.alternative }}</strong></p>
+            {% else %}
+                <p>No alternative available.</p>
+            {% endif %}
+        {% endif %}
+        
+    {% elif query %}
+        <p>No product found.</p>
+    {% endif %}
+</body>
+</html>
